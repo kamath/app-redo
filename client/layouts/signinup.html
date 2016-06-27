@@ -1,0 +1,18 @@
+<template name="signinup">
+    <div style="height: 100%;background: url(/img/bgblur.jpeg);background-position:center" id="signinup">
+        <div style="height: 100%;width: 100%;background: rgba(255,255,255,0.5)">
+            <div class="element" align="center">
+                <h1 class="title animated fadeInRight" style="color: #102A35; font-size: 72px">U2TR</h1>
+                <button id="button" class="button animated fadeInLeft" style="background: #102A35;color:#FFF;border:0"><i class="fa fa-facebook"></i> LOG IN</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    if (Meteor.user()) {
+        $(".element").hide();
+    }
+    $(".entirety").css('height', '100%')
+    $("#container").hide();
+    new WOW().init();
+    </script>
+</template>

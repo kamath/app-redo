@@ -1,6 +1,116 @@
+@import url(http://fonts.googleapis.com/icon?family=Material+Icons);
+
 /* CSS declarations go here */
-@import url(https://fonts.googleapis.com/css?family=Raleway);
-*
+
+@font-face {
+    font-family: 'Code';
+    src: url('/code/CODE Bold.otf');
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.title {
+    font-family: 'Code';
+}
+
+.element {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.button {
+    outline: none;
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    border-radius: 40px;
+    background: transparent;
+    border: 2px solid #b71c1c;
+    color: #b71c1c;
+    letter-spacing: 1px;
+    text-shadow: 0;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+.button:hover {
+    color: white;
+    background: #b71c1c;
+}
+
+.button:active {
+    letter-spacing: 2px;
+}
+
+.onclic {
+    width: 40px;
+    border-color: #bbbbbb;
+    border-width: 3px;
+    font-size: 0;
+    border-left-color: #b71c1c;
+    -webkit-animation: rotating 2s 0.25s linear infinite;
+    animation: rotating 2s 0.25s linear infinite;
+}
+
+.onclic:after {
+    content: "";
+}
+
+.onclic:hover {
+    color: #FFF;
+    background: white;
+}
+
+.validate {
+    font-size: 13px;
+    color: white;
+    background: #b71c1c;
+}
+
+.validate:after {
+    font-family: 'FontAwesome';
+    content: "\f00c";
+}
+
+@-webkit-keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.row {
+    margin-bottom: 0
+}
+
+#map
 {
-	font-family: 'Raleway'
+    height: 100%;
+    width: 100%;
 }

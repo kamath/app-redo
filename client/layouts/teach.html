@@ -1,0 +1,41 @@
+<template name="profile">
+    <div class="container" align="center" style="height: 100%;padding-top: 50px">
+        <div style="height: 25%;background: url({{img}});background-size:cover;border-radius: 50%" class="square"></div>
+        <h4>{{current.services.facebook.name}}</h4>
+        <h6>andy@university.edu</h6>
+        <a onclick="Meteor.logout();FlowRouter.go('/')">Log Out</a> {{#each classes}}
+        <div class="row" align="left">
+            <div class="col s12 m6">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">{{subject}}</span>
+                        <p><strong>When:</strong> {{date}}</p>
+                        <p><strong>People coming: </strong> {{#each peoplegoing}}<img src="http://graph.facebook.com/{{this}}/picture/?type=large" height="20px" style="vertical-align: middle;border-radius: 50%">{{/each}}</p>
+                        <p><strong>Distance:</strong> 5 miles</p>
+                    </div>
+                    <div class="card-action">
+                        {{#if notjoined}}<a href="#">Join</a>{{/if}}
+                        <a href="/teach/{{_id}}">Teach</a>
+                        <a href="#">Directions</a>
+                        <a href="#">Share</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <script type="text/javascript">
+    $(".square").css('width', $(".square").height())
+    </script>
+</template>
+<template name="teach">
+    <div class="container" align="center" style="padding-top: 50px;height: 100%">
+        <h4>Teach {{class}}</h4>
+        <form action="/submit/{{classid}}" method="get" style="height: 100%">
+            <img src="{{picture}}">
+            <h5>What makes you qualified to teach this?</h5>
+            <textarea placeholder="Qualifications" style="height: 40%" name="qualifications"></textarea>
+            <button class="btn waves-effect waves-light red darken-4" type="submit" name="action">Submit<i class="fa fa-telegram right"></i></button>
+        </form>
+    </div>
+</template>

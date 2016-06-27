@@ -1,11 +1,35 @@
 <head>
-  <title>u2tr</title>
+    <title>u2tr</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
-  {{#if currentUser}}
-  {{>home}}
-  {{else}}
-  <h1>Swag</h1>
-  {{/if}}
+    {{>main}}
 </body>
+<template name="main">
+    <div class="entirety" style="height: 100%">
+        {{#if currentUser}} {{>home}} {{else}} {{> signinup}} {{/if}}
+    </div>
+    {{#if currentUser}}
+    <style type="text/css">
+    .entirety {
+        overflow-y: scroll
+    }
+    </style>
+    {{else}}
+    <style type="text/css">
+    *
+    {
+        padding: 0;
+        margin:0;
+    }
+    .entirety {
+        padding:0;
+        margin:0;
+    }
+    </style>
+    <script type="text/javascript">
+        window.location.hash="#signinup";
+    </script>
+    {{/if}}
+</template>
