@@ -62,6 +62,13 @@ FlowRouter.route('/submit/:class', {
     }
 });
 
+FlowRouter.route('/directions/:lat/:lng', {
+    name: 'directions',
+    action() {
+        console.log('http://maps.google.com/maps?z=12&t=m&q=loc:'+FlowRouter.getParam('lat')+'+'+FlowRouter.getParam('lng')+'&output=embed');
+    }
+});     
+
 Template.signinup.events({
     'click #button': function(event) {
         Meteor.loginWithFacebook({ requestPermissions: ['email', 'public_profile', 'user_friends', 'user_likes'] }, function(err) {
@@ -95,6 +102,8 @@ Template.home.helpers({
             return 'profile'
         } else if (ActiveRoute.path(new RegExp('teach'))) {
             return 'teach'
+        } else if (ActiveRoute.path(new RegExp('directions'))) {
+            return 'directions'
         } else {
             return 'page'
         }
@@ -126,6 +135,8 @@ Template.page.helpers({
             } else {
                 events[a].notjoined = true;
             }
+            events[a].lat = events[a].loc.coordinates[1]
+            events[a].lng = events[a].loc.coordinates[0]
         }
         return events;
     },
@@ -189,6 +200,10 @@ Template.profile.helpers({
         }
         return events;
     }
+});
+
+Template.directions.helpers({
+    url: 'https://maps.google.com?saddr=Current+Location&daddr=35.109979+-80.763574&output=embed'
 })
 
 Template.add.events({

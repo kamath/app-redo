@@ -3,7 +3,8 @@
         <nav class="red darken-4">
             <div class="nav-wrapper">
                 <div class="container">
-                    <a href="#!" class="brand-logo title">U2TR</a> {{#if home}}<a href="/profile" class="fa fa-gear"></a>{{else}}<a onclick="history.back();"><i class="fa fa-arrow-left"></i></a>{{/if}}
+                    <a href="#!" class="brand-logo title">U2TR</a> {{#if home}}
+                    <a href="/profile" class="fa fa-gear"></a>{{else}}<a onclick="history.back();"><i class="fa fa-arrow-left"></i></a>{{/if}}
                 </div>
             </div>
         </nav>
@@ -22,14 +23,14 @@
                 <div class="card-content white-text">
                     <span class="card-title">{{subject}}</span>
                     <p><strong>When:</strong> {{date}}</p>
-                    <p><strong>People coming: </strong> {{#each peoplegoing}}<img src="http://graph.facebook.com/{{this}}/picture/?type=large" height="20px" style="vertical-align: middle;border-radius: 50%">{{/each}}</p>
+                    <p><strong>People coming: </strong> {{#each peoplegoing}}<img src="http://graph.facebook.com/{{this}}/picture/?type=large" height="20px" style="vertical-align: middle;border-radius: 50%"> {{/each}}</p>
                     <p><strong>Distance:</strong> 5 miles</p>
                 </div>
                 <div class="card-action">
-                    {{#if notjoined}}<a href="#">Join</a>{{/if}}
+                    <a href="#" onclick="join('{{_id}}')">Join</a>
                     <a href="/teach/{{_id}}">Teach</a>
-                    <a href="#">Directions</a>
-                    <a href="#">Share</a>
+                    <a href="/directions/{{lat}}/{{lng}}">Directions</a>
+                    <a href="#" onclick="share('{{_id}}')">Share</a>
                 </div>
             </div>
         </div>
@@ -51,6 +52,31 @@
             Session.set('immediate', true)
             FlowRouter.go('/add')
         }
+    }
+
+    function join(id) {
+        r = confirm("Are you sure you want to join?")
+        if (r) {
+            event = Events.findOne(id)
+            peoplegoing = event.peoplegoing;
+            peoplegoing.push(Meteor.user().services.facebook.id)
+            console.log(peoplegoing)
+            Events.update(id, {
+                $set: {
+                    peoplegoing: peoplegoing
+                },
+            });
+            alert('You have successfully joined ' + event.subject + '!')
+            FlowRouter.go('/')
+        }
+    }
+
+    function share(id) {
+        var message = {
+            text: "Join my tutoring session!",
+            url: "http://u2tr.herokuapp.com/join/"+id
+        };
+        window.socialmessage.send(message);
     }
     </script>
 </template>
@@ -97,6 +123,7 @@
             }
         }
     }
+
     function test2() {
         if (document.getElementById('test6').checked && !Session.get('check2')) {
             r = confirm('Immediate events are an extra 10% of your tutoring fee. Continue?');
@@ -146,5 +173,12 @@
         console.log(Session.get('coords'));
         history.back();
     }
+    </script>
+</template>
+<template name="directions">
+    <iframe src="{{url}}" id="iframe"></iframe>
+    <script type="text/javascript">
+    $("#iframe").css('height', $(window).height() - $(".navbar-fixed").height())
+    $("#iframe").css('width', $(window).width())
     </script>
 </template>
