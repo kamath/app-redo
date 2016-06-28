@@ -24,10 +24,9 @@
                     <span class="card-title">{{subject}}</span>
                     <p><strong>When:</strong> {{date}}</p>
                     <p><strong>People coming: </strong> {{#each peoplegoing}}<img src="http://graph.facebook.com/{{this}}/picture/?type=large" height="20px" style="vertical-align: middle;border-radius: 50%"> {{/each}}</p>
-                    <p><strong>Distance:</strong> 5 miles</p>
                 </div>
                 <div class="card-action">
-                    <a href="#" onclick="join('{{_id}}')">Join</a>
+                    {{#if notjoined}}<a href="#" onclick="join('{{_id}}')">Join</a>{{/if}}
                     <a href="/teach/{{_id}}">Teach</a>
                     <a href="/directions/{{lat}}/{{lng}}">Directions</a>
                     <a href="#" onclick="share('{{_id}}')">Share</a>

@@ -11,7 +11,7 @@
                         <span class="card-title">{{subject}}</span>
                         <p><strong>When:</strong> {{date}}</p>
                         <p><strong>People coming: </strong> {{#each peoplegoing}}<img src="http://graph.facebook.com/{{this}}/picture/?type=large" height="20px" style="vertical-align: middle;border-radius: 50%">{{/each}}</p>
-                        <p><strong>Distance:</strong> 5 miles</p>
+                        <p><strong>Distance:</strong> {{distance}} miles</p>
                     </div>
                     <div class="card-action">
                         {{#if notjoined}}<a href="#">Join</a>{{/if}}
