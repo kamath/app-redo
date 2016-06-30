@@ -28,7 +28,7 @@
                 <div class="card-action">
                     {{#if notjoined}}<a href="#" onclick="join('{{_id}}')">Join</a>{{/if}}
                     <a href="/teach/{{_id}}">Teach</a>
-                    <a href="/directions/{{lat}}/{{lng}}">Directions</a>
+                    <a href="/directions/{{lat}},{{lng}}">Directions</a>
                     <a href="#" onclick="share('{{_id}}')">Share</a>
                 </div>
             </div>
@@ -144,14 +144,12 @@
     <script src="https://maps.googleapis.com/maps/api/js?callback=intialize" async defer></script>
     <script>
     var mapCanvas;
-
+    console.log(Session.get('loc').curValue.lat)
     function intialize() {
         //Create a map
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log(position.coords.longitude)
             mapCanvas = new google.maps.Map(document.getElementById("map"));
             if (!Session.get('coords')) {
-                mapCanvas.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                mapCanvas.setCenter(new google.maps.LatLng(Session.get('loc').curValue.lat, Session.get('loc').curValue.lng));
                 mapCanvas.setZoom(13);
             } else {
                 mapCanvas.setCenter(new google.maps.LatLng(parseFloat(Session.get('coords').split(',')[0]), parseFloat(Session.get('coords').split(',')[1])));
@@ -163,7 +161,6 @@
             google.maps.event.addListener(mapCanvas, "center_changed", function() {
                 Session.set('coords', mapCanvas.getCenter().toUrlValue())
             });
-        });
 
     }
     google.maps.event.addDomListener(window, "load", intialize);

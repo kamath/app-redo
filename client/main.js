@@ -16,8 +16,9 @@ Tracker.autorun(function(computation) {
     userGeoLocation.set(Geolocation.latLng());
     if (userGeoLocation.get()) {
         //stop the tracker if we got something
-        console.log(userGeoLocation.curValue.lat)
+        console.log(userGeoLocation)
         computation.stop();
+        Session.set('loc', userGeoLocation)
     }
 });
 
@@ -73,10 +74,10 @@ FlowRouter.route('/submit/:class', {
     }
 });
 
-FlowRouter.route('/directions/:lat/:lng', {
+FlowRouter.route('/directions/:coords', {
     name: 'directions',
     action() {
-        console.log('http://maps.google.com/maps?z=12&t=m&q=loc:'+FlowRouter.getParam('lat')+'+'+FlowRouter.getParam('lng')+'&output=embed');
+        console.log('http://maps.google.com/maps?z=12&t=m&q=loc:'+FlowRouter.getParam('coords')+'&output=embed');
     }
 });     
 
@@ -227,7 +228,7 @@ Template.profile.helpers({
 });
 
 Template.directions.helpers({
-    url: 'https://maps.google.com?saddr=Current+Location&daddr=35.109979+-80.763574&output=embed'
+    url: 'https://maps.google.com?saddr=Current+Location&daddr='+FlowRouter.getParam('coords').split(',')[0]+','+FlowRouter.getParam('coords').split(',')[1]+'&output=embed'
 })
 
 Template.add.events({
