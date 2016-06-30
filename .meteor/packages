@@ -31,4 +31,4 @@ session
 dburles:google-maps
 mdg:geolocation
 momentjs:moment
-autopublish
+service-configuration

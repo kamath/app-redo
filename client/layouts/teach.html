@@ -1,7 +1,7 @@
 <template name="profile">
     <div class="container" align="center" style="height: 100%;padding-top: 50px">
         <div style="height: 25%;background: url({{img}});background-size:cover;border-radius: 50%" class="square"></div>
-        <h4>{{current.services.facebook.name}}</h4>
+        <h4>{{current}}</h4>
         <h6>andy@university.edu</h6>
         <a onclick="Meteor.logout();FlowRouter.go('/')">Log Out</a> {{#each classes}}
         <div class="row" align="left">

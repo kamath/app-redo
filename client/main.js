@@ -10,6 +10,17 @@ import '../database.js';
 Meteor.subscribe('events');
 Meteor.subscribe("getUserData");
 
+var userGeoLocation = new ReactiveVar(null);
+
+Tracker.autorun(function(computation) {
+    userGeoLocation.set(Geolocation.latLng());
+    if (userGeoLocation.get()) {
+        //stop the tracker if we got something
+        console.log(userGeoLocation.curValue.lat)
+        computation.stop();
+    }
+});
+
 FlowRouter.route('/', {
     name: 'signinup',
     action() {
@@ -71,14 +82,22 @@ FlowRouter.route('/directions/:lat/:lng', {
 
 Template.signinup.events({
     'click #button': function(event) {
-        Meteor.loginWithFacebook({ requestPermissions: ['email', 'public_profile', 'user_friends', 'user_likes'] }, function(err) {
+        Meteor.loginWithFacebook({}, function(err) {
             if (err) {
                 throw new Meteor.Error("Facebook login failed");
             }
-            console.log(Meteor.user().profile.name);
         });
+    },
+
+    'click #logout': function(event) {
+        Meteor.logout(function(err) {
+            if (err) {
+                throw new Meteor.Error("Logout failed");
+            }
+        })
     }
 });
+
 
 Template.page.events({
     'click .join': function(event) {
@@ -185,7 +204,11 @@ Template.teach.helpers({
 })
 
 Template.profile.helpers({
-    current: Meteor.user(),
+    current: function()
+    {
+    	console.log(Meteor.user().profile.name)
+    	return Meteor.user().profile.name
+    },
     img: 'http://graph.facebook.com/' + Meteor.user().services.facebook.id + '/picture/?type=large',
     classes: function() {
         events = Events.find({ peoplegoing: Meteor.user().services.facebook.id })
