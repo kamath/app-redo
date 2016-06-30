@@ -53,7 +53,7 @@ FlowRouter.route('/map', {
 FlowRouter.route('/profile', {
     name: 'profile',
     action() {
-        console.log(Meteor.user().profile.name);
+        console.log(Session.get('user'));
     }
 });
 
@@ -107,7 +107,14 @@ Template.page.events({
 
 Template.main.helpers({
     currentUser: function() {
-        return Meteor.user();
+    	if(!Session.get('user')) {
+    		Session.set('user', Meteor.user())
+    		return Meteor.user();
+    	}
+    	else
+    	{
+    		return Session.get('user')
+    	}
     }
 })
 
@@ -149,7 +156,7 @@ Template.page.helpers({
         for (var a = 0; a < Events.find().fetch().length; a++) {
             events[a].date = moment(events[a].date).calendar()
             events[a].id = events[a]._id.str;
-            if (events[a].peoplegoing.indexOf(Meteor.user().services.facebook.id) > -1) {
+            if (events[a].peoplegoing.indexOf(Meteor.user().profile.facebookId) > -1) {
                 events[a].notjoined = false;
             } else {
                 events[a].notjoined = true;
@@ -204,18 +211,12 @@ Template.teach.helpers({
 })
 
 Template.profile.helpers({
-    current: function()
-    {
-    	console.log(Meteor.user().profile.name)
-    	return Meteor.user().profile.name
-    },
-    img: 'http://graph.facebook.com/' + Meteor.user().services.facebook.id + '/picture/?type=large',
     classes: function() {
-        events = Events.find({ peoplegoing: Meteor.user().services.facebook.id })
+        events = Events.find({ peoplegoing: Meteor.user().profile.facebookId })
         for (var a = 0; a < events.length; a++) {
             events[a].date = moment(events[a].date).calendar()
             events[a].id = events[a]._id.str;
-            if (events[a].peoplegoing.indexOf(Meteor.user().services.facebook.id) > -1) {
+            if (events[a].peoplegoing.indexOf(Meteor.user().profile.facebookId) > -1) {
                 events[a].notjoined = true;
             } else {
                 events[a].notjoined = false;
@@ -243,7 +244,7 @@ Template.add.events({
         Events.insert({
             student: student,
             loc: { type: "Point", coordinates: [lon, lat] },
-            peoplegoing: [Meteor.user().services.facebook.id],
+            peoplegoing: [Meteor.user().profile.facebookId],
             subject: subject,
             date: date,
             teacher: teacher,
