@@ -116,6 +116,10 @@ Template.main.helpers({
     	{
     		return Session.get('user')
     	}
+    },
+    profpic: function() {
+        console.log('http://graph.facebook.com/'+Session.get('user').profile.facebookId+'/picture/?type=large')
+        return 'http://graph.facebook.com/'+Session.get('user').profile.facebookId+'/picture/?type=large'
     }
 })
 
@@ -255,24 +259,8 @@ Template.add.events({
             console.log('swagga')
         }
         FlowRouter.go('/')
-    },
-    'click #setlocation': function() {
-        console.log($("[name='class']").val());
-        console.log($("[name='date']").val());
-        console.log(document.getElementById("test5").checked);
-        Session.set('class', $("[name='class']").val());
-        Session.set('date', $("[name='date']").val());
-        Session.set('private', document.getElementById("test5").checked);
-        FlowRouter.go('/map')
     }
 });
-
-Template.add.onRendered(function() {
-    $("[name='class']").val(Session.get('class'));
-    $("[name='date']").val(Session.get('date'));
-    document.getElementById("test5").checked = Session.get('private')
-    console.log(Session.get('coords'))
-})
 
 Template.map.onRendered(function() {
     alert('Place the X where you would like to meet. Try to zoom in, and then press the back button to save')

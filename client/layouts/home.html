@@ -134,6 +134,18 @@
             }
         }
     }
+    $("#setlocation").click(function() {
+        console.log($("[name='class']").val());
+        console.log($("[name='date']").val());
+        console.log(document.getElementById("test5").checked);
+        Session.set('class', $("[name='class']").val());
+        Session.set('date', $("[name='date']").val());
+        Session.set('private', document.getElementById("test5").checked);
+        FlowRouter.go('/map')
+    });
+    $("[name='class']").val(Session.get('class'));
+    $("[name='date']").val(Session.get('date'));
+    document.getElementById("test5").checked = Session.get('private')
     </script>
 </template>
 <template name="map">

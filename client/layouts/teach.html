@@ -2,7 +2,7 @@
     <div class="container" align="center" style="height: 100%;padding-top: 50px">
         <div style="height: 100px;width:100px;background: url(http://graph.facebook.com/{{currentUser.profile.facebookId}}/picture/?type=large);background-size:cover;border-radius: 50%" class="square"></div>
         <h4>{{currentUser.profile.name}}</h4>
-        <h6>andy@university.edu</h6>
+        <h6>akamath426@gmail.com</h6>
         <a onclick="Meteor.logout();FlowRouter.go('/')">Log Out</a> {{#each classes}}
         <div class="row" align="left">
             <div class="col s12 m6">
@@ -11,13 +11,12 @@
                         <span class="card-title">{{subject}}</span>
                         <p><strong>When:</strong> {{date}}</p>
                         <p><strong>People coming: </strong> {{#each peoplegoing}}<img src="http://graph.facebook.com/{{this}}/picture/?type=large" height="20px" style="vertical-align: middle;border-radius: 50%">{{/each}}</p>
-                        <p><strong>Distance:</strong> {{distance}} miles</p>
                     </div>
                     <div class="card-action">
                         {{#if notjoined}}<a href="#">Join</a>{{/if}}
                         <a href="/teach/{{_id}}">Teach</a>
-                        <a href="#">Directions</a>
-                        <a href="#">Share</a>
+                        <a href="/directions/">Directions</a>
+                        <a href="#" onclick="share({{_id}}">Share</a>
                     </div>
                 </div>
             </div>
@@ -25,7 +24,15 @@
         {{/each}}
     </div>
     <script type="text/javascript">
-        $(".square").css('width', $(".square").height())
+    $(".square").css('width', $(".square").height())
+
+    function share(id) {
+        var message = {
+            text: "Join my tutoring session!",
+            url: "http://u2tr.herokuapp.com/join/" + id
+        };
+        window.socialmessage.send(message);
+    }
     </script>
 </template>
 <template name="teach">
