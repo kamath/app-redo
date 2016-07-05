@@ -2,14 +2,14 @@
     <div class="container" align="center" style="height: 100%;padding-top: 50px">
         <div style="height: 100px;width:100px;background: url(http://graph.facebook.com/{{currentUser.profile.facebookId}}/picture/?type=large);background-size:cover;border-radius: 50%" class="square"></div>
         <h4>{{currentUser.profile.name}}</h4>
-        <h6>akamath426@gmail.com</h6>
+        <h6>{{currentUser.profile.email}}</h6>
         <a onclick="Meteor.logout();FlowRouter.go('/')">Log Out</a> {{#each classes}}
         <div class="row" align="left">
             <div class="col s12 m6">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
                         <span class="card-title">{{subject}}</span>
-                        <p><strong>When:</strong> {{date}}</p>
+                        <p><strong>When:</strong> {{time}}</p>
                         <p><strong>People coming: </strong> {{#each peoplegoing}}<img src="http://graph.facebook.com/{{this}}/picture/?type=large" height="20px" style="vertical-align: middle;border-radius: 50%">{{/each}}</p>
                     </div>
                     <div class="card-action">

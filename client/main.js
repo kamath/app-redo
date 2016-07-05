@@ -219,7 +219,7 @@ Template.profile.helpers({
     classes: function() {
         events = Events.find({ peoplegoing: Meteor.user().profile.facebookId })
         for (var a = 0; a < events.length; a++) {
-            events[a].date = moment(events[a].date).calendar()
+            events[a].time = moment(events[a].date).calendar()
             events[a].id = events[a]._id.str;
             if (events[a].peoplegoing.indexOf(Meteor.user().profile.facebookId) > -1) {
                 events[a].notjoined = true;
@@ -232,7 +232,7 @@ Template.profile.helpers({
 });
 
 Template.directions.helpers({
-    url: 'https://maps.google.com?saddr=Current+Location&daddr='+FlowRouter.getParam('coords').split(',')[0]+','+FlowRouter.getParam('coords').split(',')[1]+'&output=embed'
+    url: 'https://maps.google.com?saddr=Current+Location&daddr=35.109979+-80.763574&output=embed'
 })
 
 Template.add.events({
