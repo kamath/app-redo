@@ -29,7 +29,7 @@
                 <div class="card-action">
                     {{#if notjoined}}<a href="#" onclick="join('{{_id}}')">Join</a>{{/if}}
                     <a href="/teach/{{_id}}">Teach</a>
-                    <a href="/directions/{{lat}},{{lng}}">Directions</a>
+                    <a href="/directions/{{lat}}+{{lng}}">Directions</a>
                     <a href="#" onclick="share('{{_id}}')">Share</a>
                 </div>
             </div>
@@ -183,6 +183,8 @@
         console.log(Session.get('coords'));
         history.back();
     }
+    $(".map-container").css('height', $(window).height() - $(".navbar-fixed").height())
+    $("#map").css('height', $(window).height() - $(".navbar-fixed").height())
     </script>
 </template>
 <template name="directions">
