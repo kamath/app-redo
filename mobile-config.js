@@ -1,3 +1,4 @@
+App.accessRule("*");   
 App.icons({
     // Android
     'android_ldpi': 'resources/mipmap-mdpi/ic_launcher.png',
