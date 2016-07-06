@@ -3,5 +3,6 @@
     <script type="text/javascript">
     $("#iframe").css('height', $(window).height() - $(".navbar-fixed").height())
     $("#iframe").css('width', $(window).width())
+    $("#iframe").src('https://maps.google.com?saddr=Current+Location&daddr='+FlowRouter.getParam('coords').split(',')[0]+'+'+FlowRouter.getParam('coords').split(',')[1]+'&output=embed')
     </script>
 </template>
