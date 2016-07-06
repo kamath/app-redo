@@ -97,11 +97,11 @@ FlowRouter.route('/submit/:class', {
     }
 });
 
-FlowRouter.route('/directions/:coords', {
+FlowRouter.route('/directions/:coordinates', {
     name: 'directions',
     action() {
         //doesn't really work yet for some reason
-        console.log('http://maps.google.com/maps?z=12&t=m&q=loc:'+FlowRouter.getParam('coords')+'&output=embed');
+        console.log('http://maps.google.com/maps?z=12&t=m&q=loc:'+FlowRouter.getParam('coordinates')+'&output=embed');
     }
 });     
 
@@ -263,7 +263,7 @@ Template.profile.helpers({
 
 Template.directions.helpers({
     //Need to make this dynamic based on URL
-    url: 'https://maps.google.com?saddr=Current+Location&daddr='+FlowRouter.getParam('coords')+'&output=embed'
+    url: 'https://maps.google.com?saddr=Current+Location&daddr='+FlowRouter.getParam('coords').replace(',', '+')+'&output=embed'
 })
 
 //Just adding events to the DB
