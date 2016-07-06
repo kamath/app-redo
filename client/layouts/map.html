@@ -7,9 +7,12 @@
     <script>
     var mapCanvas;
     console.log(Session.get('loc').curValue.lat)
-
+    $(".map-container").css('height', $(window).height() - $(".navbar-fixed").height())
+    $("#map").css('height', $(window).height() - $(".navbar-fixed").height())
     function intialize() {
         //Create a map
+        $(".map-container").css('height', $(window).height() - $(".navbar-fixed").height())
+        $("#map").css('height', $(window).height() - $(".navbar-fixed").height())
         mapCanvas = new google.maps.Map(document.getElementById("map"));
         if (!Session.get('coords')) {
             mapCanvas.setCenter(new google.maps.LatLng(Session.get('loc').curValue.lat, Session.get('loc').curValue.lng));
@@ -32,7 +35,5 @@
         console.log(Session.get('coords'));
         history.back();
     }
-    $(".map-container").css('height', $(window).height() - $(".navbar-fixed").height())
-    $("#map").css('height', $(window).height() - $(".navbar-fixed").height())
     </script>
 </template>
