@@ -2,14 +2,35 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
-import './layouts/signinup.html';
+
+//add event page
+import './layouts/add.html';
+
+//directions page
+import './layouts/directions.html';
+
+//home page - dynamic template
 import './layouts/home.html';
+
+//map page for adding location to event
+import './layouts/map.html';
+
+//viewing events page
+import './layouts/page.html';
+
+//Signin/Signup page
+import './layouts/signinup.html';
+
+//teach event form
 import './layouts/teach.html';
+
+//databases
 import '../database.js';
 
 Meteor.subscribe('events');
 Meteor.subscribe("getUserData");
 
+//Get the User's location
 var userGeoLocation = new ReactiveVar(null);
 
 Tracker.autorun(function(computation) {
@@ -22,6 +43,8 @@ Tracker.autorun(function(computation) {
     }
 });
 
+
+//Routes - most of these don't do much since the home template is dynamic
 FlowRouter.route('/', {
     name: 'signinup',
     action() {
@@ -77,10 +100,12 @@ FlowRouter.route('/submit/:class', {
 FlowRouter.route('/directions/:coords', {
     name: 'directions',
     action() {
+        //doesn't really work yet for some reason
         console.log('http://maps.google.com/maps?z=12&t=m&q=loc:'+FlowRouter.getParam('coords')+'&output=embed');
     }
 });     
 
+//Sign In/Up with Facebook
 Template.signinup.events({
     'click #button': function(event) {
         Meteor.loginWithFacebook({}, function(err) {
@@ -99,15 +124,15 @@ Template.signinup.events({
     }
 });
 
-
 Template.page.events({
     'click .join': function(event) {
-        alert('what the fuck')
+        alert('joined')
     }
 });
 
 Template.main.helpers({
     currentUser: function() {
+        //the User thing was being weird so I set a Session variable as a backup
     	if(!Session.get('user')) {
     		Session.set('user', Meteor.user())
     		return Meteor.user();
@@ -125,6 +150,7 @@ Template.main.helpers({
 
 Template.home.helpers({
     template: function() {
+        //dynamic template rendering
         if (ActiveRoute.path(new RegExp('add'))) {
             return 'add'
         } else if (ActiveRoute.path(new RegExp('map'))) {
@@ -155,6 +181,7 @@ Template.home.helpers({
     }
 });
 
+//Events query
 Template.page.helpers({
     things: function() {
         events = Events.find().fetch()
@@ -173,6 +200,7 @@ Template.page.helpers({
     },
 })
 
+//Immediate event
 Template.add.helpers({
     immediate: function() {
         if (Session.get('immediate')) {
@@ -186,6 +214,7 @@ Template.add.helpers({
     }
 });
 
+//Load map for event location
 Template.map.helpers({
     exampleMapOptions: function() {
         // Make sure the maps API has loaded
@@ -215,6 +244,7 @@ Template.teach.helpers({
     }
 })
 
+//This is a bit iffy for some reason
 Template.profile.helpers({
     classes: function() {
         events = Events.find({ peoplegoing: Meteor.user().profile.facebookId })
@@ -232,9 +262,11 @@ Template.profile.helpers({
 });
 
 Template.directions.helpers({
+    //Need to make this dynamic based on URL
     url: 'https://maps.google.com?saddr=Current+Location&daddr=35.109979+-80.763574&output=embed'
 })
 
+//Just adding events to the DB
 Template.add.events({
     'submit #add': function(event) {
         event.preventDefault();

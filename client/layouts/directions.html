@@ -1,0 +1,7 @@
+<template name="directions">
+    <iframe src="{{url}}" id="iframe"></iframe>
+    <script type="text/javascript">
+    $("#iframe").css('height', $(window).height() - $(".navbar-fixed").height())
+    $("#iframe").css('width', $(window).width())
+    </script>
+</template>

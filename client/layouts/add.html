@@ -1,0 +1,69 @@
+<template name="add">
+    <div class="container">
+        <center>
+            <h3>{{immediate}}</h3>
+        </center>
+        <div class="row">
+            <form class="col s12" id="add">
+                <p>Class/Subject Name</p>
+                <input type="text" name="class"> {{#if test}}
+                <div class="row">
+                    <div class="input-field col s12">
+                        <p>Date & Time</p>
+                        <input type="datetime-local" placeholder="Date & Time" name="date">
+                    </div>
+                </div>
+                <p onclick="test()">
+                    <input type="checkbox" class="filled-in" id="test5" name="private" />
+                    <label for="test5">Make this event private</label>
+                </p>
+                <p onclick="test2()">
+                    <input type="checkbox" class="filled-in" id="test6" name="private" />
+                    <label for="test6">Make this event immediate</label>
+                </p>
+                <center><a class="waves-effect waves-light red darken-4 btn" id="setlocation"><i class="fa fa-globe left"></i>Set Location</a></center>
+                <br> {{/if}}
+                <center>
+                    <button type="submit" class="waves-effect waves-light btn"><i class="fa fa-check left"></i>Submit</button>
+                </center>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+    function test() {
+        if (document.getElementById('test5').checked && !Session.get('check')) {
+            r = confirm('Private events are an extra 10% of your tutoring fee. Continue?');
+            if (r) {
+                document.getElementById("test5").checked = true;
+                Session.set('check', true)
+            } else {
+                document.getElementById("test5").checked = false;
+            }
+        }
+    }
+
+    function test2() {
+        if (document.getElementById('test6').checked && !Session.get('check2')) {
+            r = confirm('Immediate events are an extra 10% of your tutoring fee. Continue?');
+            if (r) {
+                document.getElementById("test6").checked = true;
+                Session.set('check2', true)
+            } else {
+                document.getElementById("test6").checked = false;
+            }
+        }
+    }
+    $("#setlocation").click(function() {
+        console.log($("[name='class']").val());
+        console.log($("[name='date']").val());
+        console.log(document.getElementById("test5").checked);
+        Session.set('class', $("[name='class']").val());
+        Session.set('date', $("[name='date']").val());
+        Session.set('private', document.getElementById("test5").checked);
+        FlowRouter.go('/map')
+    });
+    $("[name='class']").val(Session.get('class'));
+    $("[name='date']").val(Session.get('date'));
+    document.getElementById("test5").checked = Session.get('private')
+    </script>
+</template>
