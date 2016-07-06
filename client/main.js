@@ -263,7 +263,7 @@ Template.profile.helpers({
 
 Template.directions.helpers({
     //Need to make this dynamic based on URL
-    url: 'https://maps.google.com?saddr=Current+Location&daddr=35.109979+-80.763574&output=embed'
+    url: 'https://maps.google.com?saddr=Current+Location&daddr='+FlowRouter.getParam('coords')+'&output=embed'
 })
 
 //Just adding events to the DB
